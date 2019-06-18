@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "862232596563",
+    "firebase_url": "https://home-management-4b2b0.firebaseio.com",
+    "project_id": "home-management-4b2b0",
+    "storage_bucket": "home-management-4b2b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862232596563:android:84e6e5f03bd83543",
+        "android_client_info": {
+          "package_name": "com.gmail.benshaty.homemanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862232596563-r2qkjo8bks17a4lf9vv7hrgvl32uaj5c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gmail.benshaty.homemanagement",
+            "certificate_hash": "170ba1784a9eafd20c7d78bda1a8f67bba0cd45b"
+          }
+        },
+        {
+          "client_id": "862232596563-o2qsolk0r858aafm98c1apnm377fcb8a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqQP1aRB7xRpw5QLaXt8IFF598od8-BGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862232596563-o2qsolk0r858aafm98c1apnm377fcb8a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
