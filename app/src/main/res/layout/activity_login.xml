@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+    android:orientation="vertical"
 android:fitsSystemWindows="true"
 tools:context=".LoginActivity">
 
@@ -23,7 +24,7 @@ tools:context=".LoginActivity">
         android:layout_marginBottom="30dp"
         android:src="@mipmap/ic_launcher" />
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -36,9 +37,9 @@ tools:context=".LoginActivity">
             android:inputType="textEmailAddress"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -51,7 +52,7 @@ tools:context=".LoginActivity">
             android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Login Button -->
 
@@ -85,4 +86,4 @@ tools:context=".LoginActivity">
     android:layout_gravity="center|bottom"
     android:layout_marginBottom="20dp"
     android:visibility="gone" />
-</android.support.design.widget.CoordinatorLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
