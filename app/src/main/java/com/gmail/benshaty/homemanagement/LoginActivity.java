@@ -3,9 +3,11 @@ package com.gmail.benshaty.homemanagement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -27,54 +29,37 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     //private Firebase databaseReference;
     private ProgressBar progressBar;
-    private Button btnSignup, btnLogin;
+    private Button btnLogin;
     //private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance("https://home-management-4b2b0.firebaseio.com/").getReference("users");
+    private UserModel activeUser = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-/*
+        //TODO: remove comment to autologin;
+        /*
         if (auth.getCurrentUser() != null) {
-            //TODO: fix
-            // startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            checkIfUserExistInDB();
-            //finish();
+            startActivity(new Intent(LoginActivity.this, TenantActivity.class));
+            finish();
         }
-*/
-        // set the view now
+        */
+
         setContentView(R.layout.activity_login);
-
-        //TODO: fix
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnSignup = (Button) findViewById(R.id.btn_signup);
         btnLogin = (Button) findViewById(R.id.btn_login);
-
-
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-
-
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-            }
-        });
+        ImageView simpleImageView=(ImageView) findViewById(R.id.imageView1);
+        simpleImageView.setImageResource(R.drawable.building);//set the source in java class
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = inputEmail.getText().toString();
+                final String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
@@ -94,46 +79,41 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
-                                    // there was an error
                                     if (password.length() < 6) {
                                         inputPassword.setError(getString(R.string.minimum_password));
                                     } else {
-                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                                        auth.createUserWithEmailAndPassword(email, password)
+                                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                                        progressBar.setVisibility(View.GONE);
+                                                        if (!task.isSuccessful()) {
+                                                            Toast.makeText(LoginActivity.this, "Authentication failed." + task.getException(),
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            checkIfUserExistInDB();
+                                                        }
+                                                    }
+                                                });
                                     }
                                 } else {
                                     checkIfUserExistInDB();
-                                    //TODO: fix
-                                    // Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    // startActivity(intent);
-                                    Toast.makeText(LoginActivity.this,"go to main activity",Toast.LENGTH_LONG);
-                                    //finish();
                                 }
                             }
                         });
             }
         });
     }
-/*
-    @Override
-    public void onStart(){
-        super.onStart();
-        databaseReference = new Firebase("https://home-management-4b2b0.firebaseio.com/");
 
-    }
-*/
-
-    private boolean addUserToDb(){
+    private boolean addUserToDb() {
         try {
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             String[] userNameSplit = inputEmail.getText().toString().split("@");
-            UserModel userModel = new UserModel( inputEmail.getText().toString(), userNameSplit[0] , 1);
+            activeUser = new UserModel(inputEmail.getText().toString(), userNameSplit[0], 1, uid);
             DatabaseReference usersRef = rootRef.child("users");
-            usersRef.child(uid).setValue(userModel);
+            usersRef.child(uid).setValue(activeUser);
             return true;
         } catch (Exception ex) {
             return false;
@@ -142,14 +122,37 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkIfUserExistInDB() {
-
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference uidRef = rootRef.child("users").child(uid);
         ValueEventListener userEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull com.google.firebase.database.DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()) {
-                    addUserToDb() ;
+                if (!dataSnapshot.exists()) {
+                    if (addUserToDb()) {
+                        Intent intent = new Intent(LoginActivity.this, TenantActivity.class);
+                        intent.putExtra("user", activeUser);
+                        startActivity(intent);
+                        finish();
+                    }
+                } else {
+                    try {
+                        Log.d("userKey", dataSnapshot.getKey());
+                        Log.d("userName", dataSnapshot.child("userName").getValue(String.class));
+                        Log.d("userLevel", dataSnapshot.child("userLevel").getValue().toString());
+                        Log.d("userEmail", dataSnapshot.child("userEmail").getValue(String.class));
+                        UserModel user = new UserModel(dataSnapshot.child("userEmail").getValue(String.class),
+                                dataSnapshot.child("userName").getValue(String.class),
+                                dataSnapshot.child("userLevel").getValue(Integer.class),
+                                dataSnapshot.getKey());
+                        Intent intent = new Intent(LoginActivity.this, TenantActivity.class);
+                        intent.putExtra("user", user);
+                        startActivity(intent);
+                        finish();
+                    } catch (Exception ex) {
+                        inputEmail.getText().clear();
+                        inputPassword.getText().clear();
+                        Toast.makeText(LoginActivity.this, "Something got wrong!", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 
@@ -160,31 +163,7 @@ public class LoginActivity extends AppCompatActivity {
 
         };
         uidRef.addListenerForSingleValueEvent(userEventListener);
+
     }
 
-/*
-    private void checkUserType() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference().child("Users").child(auth.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
-                int userType = (userProfile.getUsertype());
-
-                switch (userType) {
-                    case 0:
-                        startActivity(new Intent(Login.this, DoctorActivity.class));
-                        break;
-                    case 1:
-                        startActivity(new Intent(Login.this, MainActivity.class));
-                        break;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
-    }
-    */
 }
