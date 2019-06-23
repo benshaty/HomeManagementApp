@@ -30,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
     //private Firebase databaseReference;
     private ProgressBar progressBar;
     private Button btnLogin;
-    //private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance("https://home-management-4b2b0.firebaseio.com/").getReference("users");
     private UserModel activeUser = null;
 
@@ -136,10 +135,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 } else {
                     try {
-                        Log.d("userKey", dataSnapshot.getKey());
-                        Log.d("userName", dataSnapshot.child("userName").getValue(String.class));
-                        Log.d("userLevel", dataSnapshot.child("userLevel").getValue().toString());
-                        Log.d("userEmail", dataSnapshot.child("userEmail").getValue(String.class));
                         UserModel user = new UserModel(dataSnapshot.child("userEmail").getValue(String.class),
                                 dataSnapshot.child("userName").getValue(String.class),
                                 dataSnapshot.child("userLevel").getValue(Integer.class),

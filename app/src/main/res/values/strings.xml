@@ -10,4 +10,10 @@
     <string name="todo">TODO</string>
     <string name="admin_page">Admin page</string>
     <string name="home_managment_system_logo">Home managment system logo</string>
+    <string name="user_email">User Email</string>
+    <string name="user_level">User Level</string>
+    <string name="total_time">Total Time</string>
+    <string name="time_to_pay">Time To Pay</string>
+    <string name="button">Button</string>
+    <string name="number_of_month_to_add">Number Of Month to Add</string>
 </resources>
