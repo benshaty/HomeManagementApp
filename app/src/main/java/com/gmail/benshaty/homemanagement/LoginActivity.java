@@ -40,12 +40,11 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         //TODO: remove comment to autologin;
-        /*
+
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, TenantActivity.class));
-            finish();
+            checkIfUserExistInDB();
         }
-        */
+
 
         setContentView(R.layout.activity_login);
         inputEmail = (EditText) findViewById(R.id.email);

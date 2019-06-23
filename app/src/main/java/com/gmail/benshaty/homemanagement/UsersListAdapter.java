@@ -106,7 +106,7 @@ class UsersListAdapter extends ArrayAdapter<UserModel> {
 
                     }
                 };
-                query.addValueEventListener(valueEventListener);
+                query.addListenerForSingleValueEvent(valueEventListener);
 
             }
         });

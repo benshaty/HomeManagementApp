@@ -3,14 +3,17 @@ package com.gmail.benshaty.homemanagement;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +25,7 @@ import java.util.Calendar;
 
 public class AdminActivity extends AppCompatActivity {
     private TextView Textv;
+    private FirebaseAuth auth;
     private DatabaseReference rootRef = FirebaseDatabase.getInstance("https://home-management-4b2b0.firebaseio.com/").getReference("users");
     final ArrayList<UserModel> usersList = new ArrayList<UserModel>();
     private ListView listiew;
@@ -31,6 +35,7 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_admin);
+        auth = FirebaseAuth.getInstance();
         Textv = (TextView) findViewById(R.id.textView3);
         listiew = (ListView) findViewById(R.id.users_list);
         Intent iin = getIntent();
@@ -80,13 +85,24 @@ public class AdminActivity extends AppCompatActivity {
         adapter = new UsersListAdapter(this, R.layout.admin_list_item,usersList);
         listiew.setAdapter(adapter);
         listiew.setItemsCanFocus(true);
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AdminActivity.this.recreate();
+                handler.postDelayed(this, 30 * 1000);
+            }
+        }, 30 * 1000);
     }
     public void updateUserI(){
+        AdminActivity.this.recreate();
         adapter.notifyDataSetChanged();
 
     }
 
+
     public void onBackPressed(){
+        auth.signOut();
         Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
