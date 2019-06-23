@@ -86,6 +86,12 @@ public class AdminActivity extends AppCompatActivity {
 
     }
 
+    public void onBackPressed(){
+        Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }
 
 

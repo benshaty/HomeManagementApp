@@ -16,4 +16,7 @@
     <string name="time_to_pay">Time To Pay</string>
     <string name="button">Button</string>
     <string name="number_of_month_to_add">Number Of Month to Add</string>
+    <string name="number_of_month_to_pay">Number of month to pay</string>
+    <string name="add_time_btn">Add</string>
+    <string name="pay_btn">Pay</string>
 </resources>

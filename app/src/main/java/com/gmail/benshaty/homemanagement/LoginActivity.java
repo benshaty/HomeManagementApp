@@ -138,7 +138,9 @@ public class LoginActivity extends AppCompatActivity {
                         UserModel user = new UserModel(dataSnapshot.child("userEmail").getValue(String.class),
                                 dataSnapshot.child("userName").getValue(String.class),
                                 dataSnapshot.child("userLevel").getValue(Integer.class),
-                                dataSnapshot.getKey());
+                                dataSnapshot.getKey(),
+                                dataSnapshot.child("totalTime").getValue(Integer.class),
+                                dataSnapshot.child("timeToPay").getValue(Integer.class));
                         Intent intent = new Intent(LoginActivity.this, TenantActivity.class);
                         intent.putExtra("user", user);
                         startActivity(intent);
