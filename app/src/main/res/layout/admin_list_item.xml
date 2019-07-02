@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightGreen">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,8 +15,9 @@
         <TextView
             android:id="@+id/user_username"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center" />
+            android:layout_height="66sp"
+            android:gravity="center"
+            android:textColor="@color/yellow"/>
     </LinearLayout>
 
     <LinearLayout
@@ -27,7 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/user_email" />
+            android:text="@string/user_email"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/user_email"
@@ -49,7 +56,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/user_level" />
+            android:text="@string/user_level"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/user_level"
@@ -70,7 +80,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/total_time" />
+            android:text="@string/total_time"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/listTotalTime"
@@ -92,7 +105,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/time_to_pay" />
+            android:text="@string/time_to_pay"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/listTimeToPay"
@@ -110,7 +126,7 @@
 
         <EditText
             android:id="@+id/listNumberEditText"
-            android:layout_width="242dp"
+            android:layout_width="242sp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/number_of_month_to_add"
@@ -119,9 +135,11 @@
 
         <Button
             android:id="@+id/listAddBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_time_btn" />
+            android:layout_width="168dp"
+            android:layout_height="65dp"
+            android:text="@string/add_time_btn"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

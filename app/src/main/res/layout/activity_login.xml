@@ -22,7 +22,7 @@ tools:context=".LoginActivity">
         android:layout_width="@dimen/logo_w_h"
         android:layout_height="@dimen/logo_w_h"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="30sp"
         android:contentDescription="@string/home_managment_system_logo"
         android:src="@mipmap/ic_launcher" />
 
@@ -33,8 +33,8 @@ tools:context=".LoginActivity">
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_height="72sp"
+            android:layout_marginBottom="10sp"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
             android:textColor="@android:color/white"
@@ -49,8 +49,8 @@ tools:context=".LoginActivity">
         <EditText
             android:id="@+id/password"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_height="72sp"
+            android:layout_marginBottom="10sp"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
             android:textColor="@android:color/white"
@@ -63,18 +63,18 @@ tools:context=".LoginActivity">
     <Button
         android:id="@+id/btn_login"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dip"
+        android:layout_height="92sp"
+        android:layout_marginTop="20sp"
         android:background="@color/colorAccent"
         android:text="@string/btn_login"
         android:textColor="@android:color/black" />
 
         <ProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
             android:layout_gravity="center|bottom"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="20sp"
             android:visibility="gone" />
 
     </LinearLayout>
